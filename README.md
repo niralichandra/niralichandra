@@ -8,16 +8,6 @@
 <br>
 <br>
 
-<!-- animated contribution graph: real data, boxes reveal cell by cell
-     (regenerated daily by .github/workflows/update-profile-art.yml) -->
-
-<h3><code>nirali@github ~ $ ./contributions.sh</code></h3>
-
-<img src="./contrib-heatmap.svg" width="860" alt="Nirali's GitHub contribution graph, auto-refreshed daily" />
-
-<br>
-<br>
-
 <!-- hero: monochrome ASCII portrait (types in) beside a neofetch-style card.
      widths add up to the graph's 860 and both panels land at the same height.
      portrait: drop a photo at ./source-photo.png and the workflow rebuilds it
@@ -31,6 +21,16 @@
 <td valign="top"><img src="./info-card.svg" width="490" alt="Nirali Chandra, neofetch-style info card" /></td>
 </tr>
 </table>
+
+<br>
+<br>
+
+<!-- animated contribution graph: real data, boxes reveal cell by cell
+     (regenerated daily by .github/workflows/update-profile-art.yml) -->
+
+<h3><code>nirali@github ~ $ ./contributions.sh</code></h3>
+
+<img src="./contrib-heatmap.svg" width="860" alt="Nirali's GitHub contribution graph, auto-refreshed daily" />
 
 <br>
 <br>
