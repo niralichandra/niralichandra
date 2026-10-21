@@ -4,10 +4,8 @@ Author the hero banner SVG: text only, no card. The name is drawn in pixel
 blocks that "generate" out of flickering noise, resolving top to bottom like an
 image model rendering, followed by a typewriter tagline that cycles phrases.
 
-    python scripts/make_hero_banner.py           # writes hero-banner-{dark,light}.svg
-    STATIC=1 python scripts/make_hero_banner.py  # frozen frames for previews
-
-The README picks the variant matching GitHub's theme via <picture>.
+    python scripts/make_hero_banner.py           # writes hero-banner.svg
+    STATIC=1 python scripts/make_hero_banner.py  # frozen frame for previews
 """
 import html
 import os
@@ -27,11 +25,10 @@ PHRASES = [
 W = 860
 H = 170
 
-# monochrome palette per GitHub theme: (ink, dim, text)
-THEMES = {
-    "dark": ("#e6edf3", "#484f58", "#c9d1d9"),
-    "light": ("#1f2328", "#afb8c1", "#424a53"),
-}
+# white pixels, grey noise, light-grey tagline
+INK = "#ffffff"
+DIM = "#484f58"
+TEXT = "#c9d1d9"
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
 # pixel grid
@@ -162,15 +159,14 @@ def typewriter(x_start):
     return css, nodes
 
 
-def build(theme):
-    ink, dim, text = THEMES[theme]
+def build():
     pixels, name_x, _ = pixel_name()
     longest = max(len(p) for p in PHRASES) + len(PROMPT)
     tag_x = (W - longest * CHAR_W) / 2
     tw_css, tw_nodes = typewriter(tag_x)
 
     css = "\n".join([
-        f"svg{{--ink:{ink};--dim:{dim};--text:{text}}}",
+        f"svg{{--ink:{INK};--dim:{DIM};--text:{TEXT}}}",
         ".ink{fill:var(--ink)}",
         ".tx{fill:var(--text)}",
         # lit pixel: flickers as noise, settles dim, then snaps solid
@@ -199,9 +195,8 @@ def build(theme):
 
 
 if __name__ == "__main__":
-    for theme in THEMES:
-        out = os.path.join(ROOT, f"hero-banner-{theme}.svg")
-        svg = build(theme)
-        with open(out, "w", encoding="utf-8") as f:
-            f.write(svg)
-        print(f"wrote {os.path.abspath(out)} {len(svg.encode())} bytes; {W} x {H}")
+    out = os.path.join(ROOT, "hero-banner.svg")
+    svg = build()
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"wrote {os.path.abspath(out)} {len(svg.encode())} bytes; {W} x {H}")

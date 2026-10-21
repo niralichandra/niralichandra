@@ -1,13 +1,9 @@
 <div align="center">
 
-<!-- hero: pixel name that generates out of noise, then a typewriter tagline.
-     dark/light variants follow GitHub's theme (python scripts/make_hero_banner.py) -->
+<!-- hero: white pixel name that generates out of noise, then a typewriter tagline
+     (python scripts/make_hero_banner.py) -->
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./hero-banner-dark.svg" />
-  <source media="(prefers-color-scheme: light)" srcset="./hero-banner-light.svg" />
-  <img src="./hero-banner-dark.svg" width="860" alt="Nirali Chandra: building intelligent systems, shipping full-stack apps, crafting worlds in Unreal" />
-</picture>
+<img src="./hero-banner.svg" width="860" alt="Nirali Chandra: building intelligent systems, shipping full-stack apps, crafting worlds in Unreal" />
 
 <br>
 <br>

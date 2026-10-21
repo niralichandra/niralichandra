@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="860" height="170" viewBox="0 0 860 170" role="img" aria-label="Nirali Chandra: building intelligent systems, shipping full-stack apps, crafting worlds in Unreal">
 <title>Nirali Chandra</title>
-<style>svg{--ink:#1f2328;--dim:#afb8c1;--text:#424a53}
+<style>svg{--ink:#ffffff;--dim:#484f58;--text:#c9d1d9}
 .ink{fill:var(--ink)}
 .tx{fill:var(--text)}
 @keyframes lit{0%{opacity:0;fill:var(--dim)}15%{opacity:.6}30%{opacity:.15}50%{opacity:.7;fill:var(--dim)}75%{opacity:.4}100%{opacity:1;fill:var(--ink)}}
