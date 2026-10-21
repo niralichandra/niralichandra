@@ -1,5 +1,13 @@
 <div align="center">
 
+<!-- hero banner: name, typewriter tagline cycling through phrases, floating cube
+     (python scripts/make_hero_banner.py) -->
+
+<img src="./hero-banner.svg" width="860" alt="Nirali Chandra: building intelligent systems, shipping full-stack apps, crafting worlds in Unreal" />
+
+<br>
+<br>
+
 <!-- animated contribution graph: real data, boxes reveal cell by cell
      (regenerated daily by .github/workflows/update-profile-art.yml) -->
 
