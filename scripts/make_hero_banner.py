@@ -23,18 +23,22 @@ PHRASES = [
 PILLS = ["Python", "C++", "Unreal Engine", "PyTorch", "React"]
 
 W = 860
-H = 330
-INSET = 6
+H = 350
+TITLEBAR_H = 30
+SHIFT = 18  # content offset below the title bar
+PROMPT_USER = "nirali@github"
 
-BG_A = "#0b2a2c"
-BG_B = "#0a1a24"
-FRAME = "#1f4d4f"
-DOT = "#2a5d5e"
-HEAD = "#ccfbf1"
-ACCENT = "#2dd4bf"
-SKY = "#7dd3fc"
-PILL_BG = "#0f3b3c"
-PILL_EDGE = "#2dd4bf"
+# same monochrome terminal palette as the portrait and info card
+BG = "#0d1117"
+BG2 = "#111722"
+FRAME = "#30363d"
+DOT = "#1c2128"
+MUTED = "#7d8590"
+TEXT = "#c9d1d9"
+HEAD = "#e6edf3"
+ACCENT = TEXT
+PILL_BG = "#161b22"
+PILL_EDGE = FRAME
 SANS = "'Segoe UI', Ubuntu, 'Helvetica Neue', Arial, sans-serif"
 MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
@@ -116,17 +120,16 @@ def cube():
     rx, ry = right[0]
     return f"""
   <g class="float">
-    <polygon points="{pts(top)}" fill="url(#gTop)" stroke="{HEAD}" stroke-width="1.4" stroke-linejoin="round"/>
-    <polygon points="{pts(left)}" fill="url(#gLeft)" stroke="{HEAD}" stroke-width="1.4" stroke-linejoin="round"/>
-    <polygon points="{pts(right)}" fill="url(#gRight)" stroke="{HEAD}" stroke-width="1.4" stroke-linejoin="round"/>
-    <g transform="matrix(0.866 0.5 0 1 {lx:.1f} {ly:.1f})" font-family="{MONO}" font-weight="700" font-size="21" fill="#06302f">
+    <polygon points="{pts(top)}" fill="#2d333b" stroke="{MUTED}" stroke-width="1.2" stroke-linejoin="round"/>
+    <polygon points="{pts(left)}" fill="#1c2128" stroke="{MUTED}" stroke-width="1.2" stroke-linejoin="round"/>
+    <polygon points="{pts(right)}" fill="#161b22" stroke="{MUTED}" stroke-width="1.2" stroke-linejoin="round"/>
+    <g transform="matrix(0.866 0.5 0 1 {lx:.1f} {ly:.1f})" font-family="{MONO}" font-weight="700" font-size="21" fill="{TEXT}">
       <text x="11" y="40">&lt;/&gt;</text>
     </g>
-    <g transform="matrix(0.866 -0.5 0 1 {rx:.1f} {ry:.1f})" font-family="{MONO}" font-weight="700" font-size="24" fill="{HEAD}">
+    <g transform="matrix(0.866 -0.5 0 1 {rx:.1f} {ry:.1f})" font-family="{MONO}" font-weight="700" font-size="24" fill="{TEXT}">
       <text x="12" y="40">{{ }}</text>
     </g>
-    <circle cx="{CX - 6}" cy="{CY + 22}" r="5" fill="{SKY}" class="pulse"/>
-    <circle cx="{CX + 18}" cy="{CY + 2 * DY + S - 20}" r="5" fill="{HEAD}"/>
+    <circle cx="{CX - 6}" cy="{CY + 22}" r="4" fill="{TEXT}" class="pulse"/>
   </g>"""
 
 
@@ -137,7 +140,7 @@ def pills():
         style = "" if STATIC else f' style="animation:up .6s ease-out {1.0 + i * 0.12:.2f}s both"'
         out.append(
             f'<g{style}><rect x="{x}" y="{y}" width="{w}" height="36" rx="18" fill="{PILL_BG}" '
-            f'stroke="{PILL_EDGE}" stroke-opacity=".75" stroke-width="1.2"/>'
+            f'stroke="{PILL_EDGE}" stroke-width="1.2"/>'
             f'<text x="{x + w / 2}" y="{y + 23.5}" text-anchor="middle">{esc(label)}</text></g>'
         )
         x += w + 12
@@ -153,14 +156,10 @@ def build():
         "@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}",
         "@keyframes dash{to{stroke-dashoffset:-120}}",
         "@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}",
-        "@keyframes slide{0%,100%{transform:translateX(0)}50%{transform:translateX(120px)}}",
-        "@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}",
         ".float{animation:float 6s ease-in-out infinite}",
         f".shadow{{animation:shadow 6s ease-in-out infinite;transform-origin:{CX}px 272px}}",
         ".orbit{animation:dash 14s linear infinite}",
         ".pulse{animation:pulse 2.4s ease-in-out infinite}",
-        ".slide{animation:slide 9s ease-in-out infinite}",
-        ".tw{animation:tw 3s ease-in-out infinite}",
         ".h{animation:up .7s ease-out .1s both}",
         ".n{animation:up .7s ease-out .3s both}",
         *tw_css,
@@ -175,49 +174,28 @@ def build():
         parts.append(f"<style>{css}</style>")
     parts.append(f"""
   <defs>
-    <linearGradient id="gBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="{BG_A}"/><stop offset="1" stop-color="{BG_B}"/>
-    </linearGradient>
-    <radialGradient id="gGlowL" cx="0.22" cy="0.25" r="0.45">
-      <stop offset="0" stop-color="{ACCENT}" stop-opacity=".22"/><stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="gGlowR" cx="0.8" cy="0.5" r="0.35">
-      <stop offset="0" stop-color="{ACCENT}" stop-opacity=".2"/><stop offset="1" stop-color="{ACCENT}" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="gTop" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#e6fffb"/><stop offset="1" stop-color="#99f6e4"/>
-    </linearGradient>
-    <linearGradient id="gLeft" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#5eead4"/><stop offset="1" stop-color="#14b8a6"/>
-    </linearGradient>
-    <linearGradient id="gRight" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0f766e"/>
+    <linearGradient id="gBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="{BG2}"/><stop offset="1" stop-color="{BG}"/>
     </linearGradient>
     <pattern id="pDots" width="22" height="22" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1" fill="{DOT}"/>
     </pattern>
-    <clipPath id="clip"><rect x="{INSET}" y="{INSET}" width="{W - 2 * INSET}" height="{H - 2 * INSET}" rx="22"/></clipPath>
   </defs>
 
-  <g clip-path="url(#clip)">
-    <rect width="{W}" height="{H}" fill="url(#gBg)"/>
-    <rect width="{W}" height="{H}" fill="url(#pDots)" opacity=".55"/>
-    <rect width="{W}" height="{H}" fill="url(#gGlowL)"/>
-    <rect width="{W}" height="{H}" fill="url(#gGlowR)"/>
-    <rect class="slide" x="520" y="{INSET}" width="48" height="2" fill="{ACCENT}" opacity=".8"/>
-    <rect class="slide" x="300" y="{H - INSET - 2}" width="48" height="2" fill="{ACCENT}" opacity=".6" style="animation-delay:-4s"/>
-    <circle class="tw" cx="452" cy="298" r="2" fill="{SKY}"/>
-    <circle class="tw" cx="586" cy="300" r="1.6" fill="{HEAD}" style="animation-delay:-1.5s"/>
-    <circle class="tw" cx="808" cy="58" r="1.6" fill="{HEAD}" style="animation-delay:-.7s"/>
-  </g>
-  <rect x="{INSET}" y="{INSET}" width="{W - 2 * INSET}" height="{H - 2 * INSET}" rx="22" fill="none" stroke="{FRAME}" stroke-width="1.2"/>
+  <rect width="{W}" height="{H}" rx="12" fill="url(#gBg)"/>
+  <rect y="{TITLEBAR_H}" width="{W}" height="{H - TITLEBAR_H - 12}" fill="url(#pDots)"/>
+  <rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" fill="none" stroke="{FRAME}"/>
+  <line x1="0" y1="{TITLEBAR_H}" x2="{W}" y2="{TITLEBAR_H}" stroke="{FRAME}"/>
+  {''.join(f'<circle cx="{20 + i * 16}" cy="{TITLEBAR_H / 2}" r="5" fill="{c}"/>' for i, c in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]))}
+  <text x="{W / 2}" y="{TITLEBAR_H / 2 + 4}" fill="{MUTED}" font-family="{MONO}" font-size="12" text-anchor="middle">{PROMPT_USER}: ~$ ./hello.sh</text>
 
-  <ellipse class="shadow" cx="{CX}" cy="272" rx="58" ry="9" fill="#04191b"/>
+  <g transform="translate(0 {SHIFT})">
+  <ellipse class="shadow" cx="{CX}" cy="272" rx="58" ry="8" fill="#010409"/>
   <ellipse class="orbit" cx="{CX}" cy="{CY + 70}" rx="140" ry="40" transform="rotate(-12 {CX} {CY + 70})"
-           fill="none" stroke="{ACCENT}" stroke-opacity=".35" stroke-width="1.2" stroke-dasharray="5 7"/>
+           fill="none" stroke="{MUTED}" stroke-opacity=".45" stroke-width="1" stroke-dasharray="4 7"/>
   {cube()}
 
-  <text class="h" x="58" y="78" font-family="{MONO}" font-size="13" font-weight="700" letter-spacing="4.5" fill="{ACCENT}">{esc(HANDLE.upper())}</text>
+  <text class="h" x="58" y="78" font-family="{MONO}" font-size="13" font-weight="700" letter-spacing="4.5" fill="{MUTED}">{esc(HANDLE.upper())}</text>
   <text class="n" x="56" y="146" font-family="{SANS}" font-size="60" font-weight="800" fill="{HEAD}" letter-spacing="-.5">{esc(NAME)}</text>
   <g font-family="{MONO}" font-size="{TAG_FONT}" fill="{ACCENT}">
     <text x="{TAG_X}" y="{TAG_Y}">{esc(PROMPT.strip())}</text>
@@ -225,6 +203,7 @@ def build():
   </g>
   <g font-family="{SANS}" font-size="14" font-weight="700" fill="{HEAD}">
     {''.join(pills())}
+  </g>
   </g>
 </svg>
 """)
