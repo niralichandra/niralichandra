@@ -69,8 +69,8 @@
 
 <h3><code>nirali@github ~ $ ./links.sh</code></h3>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-niralichandra-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/niralichandra)
-[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:niralichandra@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-niralichandra-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nirali-chandra-b9229433b/)
+[![Email](https://img.shields.io/badge/Email-Contact_Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:niralichandra07@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-niralichandra-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/niralichandra)
 
 <br>
